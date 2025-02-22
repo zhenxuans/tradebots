@@ -1,0 +1,9 @@
+# 忽略所有 node_modules 目录
+node_modules/
+
+# 可选：其他常见忽略项（根据项目类型补充）
+.DS_Store
+.env
+dist/
+*.log
+*.js

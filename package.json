@@ -12,13 +12,14 @@
         "@triton-one/yellowstone-grpc": "^2.1.0",
         "@types/ws": "^8.5.14",
         "axios": "^1.6.8",
+        "dotenv": "^16.4.7",
         "node-fetch": "^3.3.2",
         "p-limit": "^5.0.0",
+        "p-queue": "^8.1.0",
         "ws": "^8.18.0"
     },
     "devDependencies": {
         "@types/node": "^20.17.19",
-        "ts-node": "^10.9.2",
         "typescript": "^5.7.3"
     },
     "keywords": [

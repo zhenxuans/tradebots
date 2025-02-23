@@ -117,7 +117,7 @@ class CopyTradeBot {
         mint: raw.mint,
         timestamp: Date.now(),
         trader: raw.traderPublicKey,
-        isSolAmount: raw.txType === 'buy'
+        isSolAmount: true
       };
 
       if (raw.txType === 'buy' && typeof raw.solAmount === 'number') {
@@ -191,7 +191,7 @@ class CopyTradeBot {
     if (signal.action === 'buy') {
       body.amount = signal.amount;
     } else {
-      body.percentage = signal.sellPercentage;
+      body.amount = signal.sellPercentage;
     }
 
     const response = await fetch(url.toString(), {

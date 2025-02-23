@@ -200,12 +200,17 @@ class CopyTradeBot {
       body: JSON.stringify(body)
     });
 
+    console.log("### DEBUG trade body: " + body as string);
+
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`API ${response.status}: ${errorText.slice(0, 100)}`);
     }
 
     const data = await response.json() as ApiResponse;
+
+    console.log("### DEBUG trade response: " + data.signature);
+
     return data.signature;
   }
 

@@ -200,7 +200,7 @@ class CopyTradeBot {
       body: JSON.stringify(body)
     });
 
-    console.log("### DEBUG trade body: " + body as string);
+    console.log("### DEBUG trade body: " + JSON.stringify(body));
 
     if (!response.ok) {
       const errorText = await response.text();

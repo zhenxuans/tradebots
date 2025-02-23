@@ -105,7 +105,7 @@ class TradeEngine {
         action: 'buy',
         mint: signal.mint,
         amount: signal.amount,
-        denominatedInSol: true
+        denominatedInSol: signal.isSolAmount.toString()
       });
       
       // 初始化卖出计划
@@ -169,7 +169,7 @@ class TradeEngine {
     action: 'buy' | 'sell';
     mint: string;
     amount: number;
-    denominatedInSol: boolean;
+    denominatedInSol: string;
   }) {
     const url = new URL('https://pumpportal.fun/api/trade');
     url.searchParams.set('api-key', this.config.API_KEY);
@@ -183,11 +183,20 @@ class TradeEngine {
       })
     });
 
+    console.log("### DEBUG trade body: " + JSON.stringify({
+      ...this.config.TRADE_PARAMS,
+      ...params
+    }));
+
+
     if (!response.ok) {
       throw new Error(`API ${response.status}: ${await response.text()}`);
     }
 
     const data = await response.json() as ApiResponse;
+
+    console.log("### DEBUG trade response: " + data.signature);
+
     return data.signature;
   }
 
@@ -259,6 +268,9 @@ class CopyTradeBot {
   private parseTradeSignal(data: WebSocket.Data): TradeSignal | null {
     try {
       const raw = JSON.parse(data.toString());
+
+      console.log("### DEBUG raw data is: " + data.toString());
+
       if (!raw.mint || !raw.txType || !raw.traderPublicKey) return null;
 
       return {

@@ -280,6 +280,8 @@ class CopyTradeBot {
       })
     });
 
+    // console.log("### DEBUG trade body: " + JSON.stringify(body));
+
     if (!response.ok) {
       throw new Error(`API Error: ${response.status} ${await response.text()}`);
     }

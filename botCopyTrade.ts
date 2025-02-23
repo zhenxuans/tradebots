@@ -86,6 +86,7 @@ class CopyTradeBot {
     this.ws.on('message', (data: WebSocket.Data) => {
       this.queue.add(async () => {
         const signal = this.parseTradeSignal(data);
+        console.log(signal);
         if (signal) await this.handleTradeSignal(signal);
       });
     });
@@ -110,7 +111,7 @@ class CopyTradeBot {
     try {
       const raw = JSON.parse(data.toString());
       
-      console.log("### DEBUG raw data is: " + data.toString());
+      // console.log("### DEBUG raw data is: " + data.toString());
 
       // 增强字段校验
       if (!raw.mint || !raw.txType || !raw.traderPublicKey) return null;
@@ -123,6 +124,9 @@ class CopyTradeBot {
       };
 
       if (raw.txType === 'buy' && typeof raw.solAmount === 'number') {
+        
+        console.log("### DEBUG parse Signal buy , raw data is : " + data.toString() );
+        
         return {
           ...baseSignal,
           action: 'buy',
@@ -131,6 +135,9 @@ class CopyTradeBot {
       }
 
       if (raw.txType === 'sell' && typeof raw.tokenAmount === 'number') {
+        
+        // console.log("### DEBUG parse Signal sell , raw data is : " + data.toString() );
+        
         return {
           ...baseSignal,
           action: 'sell',
@@ -183,7 +190,7 @@ class CopyTradeBot {
     const url = new URL('https://pumpportal.fun/api/trade');
     url.searchParams.set('api-key', CONFIG.API_KEY);
 
-    console.log("### DEBUG url is : " + url.toString());
+    // console.log("### DEBUG url is : " + url.toString());
 
     const body: any = {
       ...CONFIG.TRADE_PARAMS,
@@ -204,7 +211,7 @@ class CopyTradeBot {
       body: JSON.stringify(body)
     });
 
-    console.log("### DEBUG trade body: " + JSON.stringify(body));
+    // console.log("### DEBUG trade body: " + JSON.stringify(body));
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -213,7 +220,7 @@ class CopyTradeBot {
 
     const data = await response.json() as ApiResponse;
 
-    console.log("### DEBUG trade response: " + data.signature);
+    // console.log("### DEBUG trade response: " + data.signature);
 
     return data.signature;
   }

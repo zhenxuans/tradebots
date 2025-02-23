@@ -141,7 +141,7 @@ class TradeEngine {
         action: 'sell',
         mint: mint,
         amount: Math.min(sellAmount, pending.remaining),
-        denominatedInSol: false
+        denominatedInSol: 'true'
       });
 
       // 更新卖出状态

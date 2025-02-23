@@ -110,6 +110,8 @@ class CopyTradeBot {
     try {
       const raw = JSON.parse(data.toString());
       
+      console.log("### DEBUG raw data is: " + data.toString());
+
       // 增强字段校验
       if (!raw.mint || !raw.txType || !raw.traderPublicKey) return null;
 
@@ -181,11 +183,13 @@ class CopyTradeBot {
     const url = new URL('https://pumpportal.fun/api/trade');
     url.searchParams.set('api-key', CONFIG.API_KEY);
 
+    console.log("### DEBUG url is : " + url.toString());
+
     const body: any = {
       ...CONFIG.TRADE_PARAMS,
       action: signal.action,
       mint: signal.mint,
-      denominatedInSol: signal.isSolAmount
+      denominatedInSol: signal.isSolAmount.toString()
     };
 
     if (signal.action === 'buy') {

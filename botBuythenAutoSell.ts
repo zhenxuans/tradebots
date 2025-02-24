@@ -141,7 +141,7 @@ class TradeEngine {
         action: 'sell',
         mint: mint,
         amount: Math.min(sellAmount, pending.remaining),
-        denominatedInSol: 'true'
+        denominatedInSol: 'false'
       });
 
       // 更新卖出状态
@@ -276,8 +276,8 @@ class CopyTradeBot {
       return {
         action: raw.txType,
         mint: raw.mint,
-        amount: raw.solAmount * CONFIG.BUY_RATIO,
-        isSolAmount: true,
+        amount: raw.tokenAmount * CONFIG.BUY_RATIO, // 这里不用raw.solAmount
+        isSolAmount: false, // 按照跟单对象的购买的代币数量对应比例买入
         timestamp: Date.now(),
         trader: raw.traderPublicKey
       };
